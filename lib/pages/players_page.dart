@@ -72,7 +72,9 @@ class _PlayersPageState extends State<PlayersPage> {
                 margin: EdgeInsets.all(30),
                 child: IconButton(
                   icon: Icon(Icons.close, size: 40),
-                  onPressed: () {},
+                  onPressed: () {
+                    players.deletePlayer(index);
+                  },
                 ),
               ),
             ],
