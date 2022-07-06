@@ -37,6 +37,7 @@ class Game extends ChangeNotifier{
 
   bool nextPlayer(){
     if (_players.length - _currentPlayerIndex > 1){
+      _currentPlayerIndex++;
       return true;
     }
     return false;
