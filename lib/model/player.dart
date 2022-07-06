@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class _Player extends ChangeNotifier{
+class Player extends ChangeNotifier{
   String _name;
-  int _points = 0;
+  int _pointsOverall = 0;
   String _picturePath;
 
   //Constructor
-  _Player(String name, {String? picturePath}) : _name = name, _picturePath = picturePath ?? "";
+  Player(String name, {String? picturePath}) : _name = name, _picturePath = picturePath ?? "";
 
 
   //Getter
@@ -23,7 +23,7 @@ class _Player extends ChangeNotifier{
      */
   }
 
-  int get points => _points;
+  int get points => _pointsOverall;
 
   //Setter
   void setName(String name){
@@ -37,7 +37,7 @@ class _Player extends ChangeNotifier{
   }
 
   void setPoints(int points){
-    _points = points;
+    _pointsOverall = points;
     notifyListeners();
   }
 
@@ -45,25 +45,25 @@ class _Player extends ChangeNotifier{
 }
 
 class PlayerList extends ChangeNotifier{
-  late List<_Player> _players;
+  late List<Player> _players;
 
   //Constructor
   PlayerList(){
-    _players = <_Player>[
-      _Player("Martin"),
-      _Player("Jose"),
-      _Player("Martin Christopher Düppenbecker der Grosse Jr der zweite vom Kaiserreich Grosspreussen der 3. Welthämisphäre"),
-      _Player("Emma")
+    _players = <Player>[
+      Player("Martin"),
+      Player("Jose"),
+      Player("Martin Christopher Düppenbecker der Grosse Jr der zweite vom Kaiserreich Grosspreussen der nördlichen Welthämisphäre und Grossherr von Deutsch-Südafrika"),
+      Player("Emma")
 
     ];
   }
 
   //Getter
-  List<_Player> get players => _players;
+  List<Player> get players => _players;
 
 
   void addPlayer(String name, {String? picturePath}){
-    _players.add(_Player(name, picturePath: picturePath));
+    _players.add(Player(name, picturePath: picturePath));
     notifyListeners();
   }
 
