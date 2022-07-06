@@ -73,7 +73,9 @@ class _PlayersPageState extends State<PlayersPage> {
                 child: IconButton(
                   icon: Icon(Icons.close, size: 40),
                   onPressed: () {
-                    players.deletePlayer(index);
+                    if (players.players.length > 1){
+                      players.deletePlayer(index);
+                    }
                   },
                 ),
               ),
