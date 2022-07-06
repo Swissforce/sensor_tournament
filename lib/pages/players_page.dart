@@ -96,7 +96,9 @@ class _PlayersPageState extends State<PlayersPage> {
               margin: EdgeInsets.all(30),
               child: IconButton(
                 icon: Icon(Icons.camera_alt, size: 30),
-                onPressed: () {  },
+                onPressed: () {
+                  // Bild aufnehmen
+                },
               ),
             ),
 
@@ -113,7 +115,12 @@ class _PlayersPageState extends State<PlayersPage> {
               margin: EdgeInsets.all(30),
               child: IconButton(
                 icon: Icon(Icons.send, size: 30),
-                onPressed: () {  },
+                onPressed: () {
+                  if (textController.text.isNotEmpty){
+                    players.addPlayer(textController.text);
+                    textController.clear();
+                  }
+                },
               ),
             ),
           ],
