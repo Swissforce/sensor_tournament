@@ -24,7 +24,7 @@ class _GameScreamPage extends State<GameScreamPage>{
 
     _noiseSubscription = NoiseMeter().noiseStream.listen((NoiseReading noiseReading) {
       setState(() {
-        _currentDecibel = noiseReading.meanDecibel;
+        _currentDecibel = double.parse(noiseReading.meanDecibel.toStringAsFixed(1));
         if (_currentDecibel > _maxDecibelPlayer){
           _maxDecibelPlayer = _currentDecibel;
         }
@@ -75,15 +75,12 @@ class _GameScreamPage extends State<GameScreamPage>{
 
 
   Widget screamGame(BuildContext context){
-    String _maxInt = _maxDecibelPlayer.toStringAsFixed(1);
-    String _currentInt = _currentDecibel.toStringAsFixed(1);
-
     return Row(
       children: [
         Column(
           children: [
-            Text("Höchst-dB: $_maxInt"),
-            Text("Aktuelle-dB: $_currentInt"),
+            Text("Höchst-dB: $_maxDecibelPlayer"),
+            Text("Aktuelle-dB: $_currentDecibel"),
           ],
         ),
       ],
