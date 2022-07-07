@@ -1,28 +1,35 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:noise_meter/noise_meter.dart';
 
-import 'package:sensor_tournament/model/player.dart';
 import 'package:sensor_tournament/model/game.dart';
 import 'package:sensor_tournament/pages/game_selection_page.dart';
 import 'package:sensor_tournament/pages/game_winner_page.dart';
+import 'package:sensor_tournament/util/namedStatefulWidget.dart';
 
 
+String _gameName = "Glass shatterer";
+String _gameDesc = "Scream the loudest";
 
-class GameScreamPage extends StatefulWidget{
+
+class GameScreamPage extends NamedStatefulWidget{
+  String get gameName => _gameName;
+  String get gameDesc => _gameDesc;
+
   @override
   _GameScreamPage createState() => _GameScreamPage();
 }
 
 class _GameScreamPage extends State<GameScreamPage>{
-  String gameName = "Glass shatterer";
-  String gameDesc = "Scream the loudest";
+  late Game _game;
 
-  late Game game;
   double _currentDecibel = 0, _maxDecibelPlayer = 0;
   late StreamSubscription<NoiseReading> _noiseSubscription;
+
+
+
+
 
   @override
   void initState() {
@@ -31,10 +38,12 @@ class _GameScreamPage extends State<GameScreamPage>{
   }
 
   void startReadingDecibel(){
+    _game = Provider.of<Game>(context);
     _noiseSubscription = NoiseMeter().noiseStream.listen((NoiseReading noiseReading) {
       setState(() {
         _currentDecibel = double.parse(noiseReading.meanDecibel.toStringAsFixed(1));
         if (_currentDecibel > _maxDecibelPlayer){
+          _game.newHighestScoreIndex();
           _maxDecibelPlayer = _currentDecibel;
         }
       });
@@ -65,8 +74,6 @@ class _GameScreamPage extends State<GameScreamPage>{
             const SizedBox(
               height: 60,
             ),
-            //Expanded(child: playerList(context)),
-            //playerForm(context),
           ],
         ),
       ),
@@ -74,17 +81,17 @@ class _GameScreamPage extends State<GameScreamPage>{
   }
 
   Widget headerWidget(BuildContext context){
-    game = Provider.of<Game>(context);
+    _game = Provider.of<Game>(context);
     Icon profilePicture = Icon(Icons.person);
 
-    if (game.players[game.currentPlayerIndex].picture != profilePicture){
-      profilePicture = game.players[game.currentPlayerIndex].picture;
+    if (_game.players[_game.currentPlayerIndex].picture != profilePicture){
+      profilePicture = _game.players[_game.currentPlayerIndex].picture;
     }
 
     return Column(
       children: [
-        Text("$gameName", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-        Text("$gameDesc", style: TextStyle(fontSize: 20)),
+        Text("$_gameName", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+        Text("$_gameDesc", style: TextStyle(fontSize: 20)),
         Divider(),
         const SizedBox(
           height: 20,
@@ -95,7 +102,7 @@ class _GameScreamPage extends State<GameScreamPage>{
             Icon(profilePicture.icon, size: 30),
             Flexible(
               child: Container(
-                child: Text(game.players[game.currentPlayerIndex].name, style: TextStyle(fontSize: 25)),
+                child: Text(_game.players[_game.currentPlayerIndex].name, style: TextStyle(fontSize: 25)),
               ),
             ),
           ],
@@ -126,7 +133,7 @@ class _GameScreamPage extends State<GameScreamPage>{
 
 
   Widget buttonsWidget(BuildContext context){
-    game = Provider.of<Game>(context);
+    _game = Provider.of<Game>(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -134,8 +141,8 @@ class _GameScreamPage extends State<GameScreamPage>{
         IconButton(
           icon: Icon(Icons.keyboard_double_arrow_right, size: 50),
           onPressed: () {
-            if(!game.nextPlayer()){
-              game.endGame(gameName, _maxDecibelPlayer.toString(), "dB");
+            if(!_game.nextPlayer()){
+              _game.endGame(_gameName, _maxDecibelPlayer.toString(), "dB");
               stopReadingDecibel();
 
               Navigator.push(context, MaterialPageRoute(builder: (context) {

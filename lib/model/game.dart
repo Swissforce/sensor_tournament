@@ -53,6 +53,10 @@ class Game extends ChangeNotifier {
     notifyListeners();
   }
 
+  void newHighestScoreIndex(){
+    _highestScorePlayerIndex = _currentPlayerIndex;
+  }
+
 
   bool nextPlayer(){
     if (_players.length - _currentPlayerIndex > 1){

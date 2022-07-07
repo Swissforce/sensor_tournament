@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sensor_tournament/model/game.dart';
 import 'package:sensor_tournament/pages/game_selection_page.dart';
+import 'package:sensor_tournament/pages/main_menu_page.dart';
 
 
 
@@ -120,7 +121,7 @@ class _GameWinnerPage extends State<GameWinnerPage>{
           icon: Icon(Icons.home, size: 50),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return GameSelectionPage();
+              return MainMenuPage();
             }));
           },
         )
