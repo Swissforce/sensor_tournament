@@ -41,6 +41,13 @@ class Player extends ChangeNotifier{
     notifyListeners();
   }
 
+  void addPoints(int points){
+    _pointsOverall += points;
+    notifyListeners();
+  }
+
+
+
 
 }
 
