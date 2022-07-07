@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:sensor_tournament/pages/game_scream_page.dart';
+
 class GameSelectionPage extends StatelessWidget{
 
   @override
@@ -21,9 +23,13 @@ class GameSelectionPage extends StatelessWidget{
                 minWidth: MediaQuery.of(context).size.width * 0.7,
                 buttonColor: Theme.of(context).primaryColorLight,
                 child: RaisedButton(
-                  onPressed: () {  },
                   padding: const EdgeInsets.all(30),
-                  child: Text("Spiel 1", style: TextStyle(fontSize: 30),),
+                  child: Text("Glass shatterer", style: TextStyle(fontSize: 30)),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return GameScreamPage();
+                    }));
+                  },
                 ),
               ),
               const SizedBox(

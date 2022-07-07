@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sensor_tournament/model/player.dart';
 
+import 'package:sensor_tournament/model/player.dart';
+import 'package:sensor_tournament/model/game.dart';
+import 'package:sensor_tournament/pages/game_scream_page.dart';
 import 'package:sensor_tournament/pages/main_menu_page.dart';
 
+
 void main() {
-  PlayerList data = PlayerList();
-  runApp(TournamentApp(data));
+  PlayerList playerData = PlayerList();
+  Game gameData = Game(players: playerData.players);
+  runApp(TournamentApp(playerData, gameData));
 }
 
 class TournamentApp extends StatelessWidget {
-  PlayerList data;
+  PlayerList playerData;
+  Game gameData;
 
   //Constructor
-  TournamentApp(this.data, {Key? key}) : super(key: key);
+  TournamentApp(this.playerData, this.gameData, {Key? key}) : super(key: key);
 
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PlayerList>(
-      create: (_) => data,
-      child: MaterialApp(
-        title: 'Sensor Tournament',
-        theme: ThemeData(primarySwatch: Colors.blue,),
-        home: MainMenuPage(),
-      ),
+      create: (_) => playerData,
+      child: ChangeNotifierProvider<Game>(
+        create: (_) => gameData,
+        child: MaterialApp(
+          title: 'Sensor Tournament',
+          theme: ThemeData(primarySwatch: Colors.blue,),
+          home: MainMenuPage(),
+        ),
+      )
     );
   }
 }
