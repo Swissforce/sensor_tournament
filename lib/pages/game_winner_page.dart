@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import 'package:sensor_tournament/model/game.dart';
 import 'package:sensor_tournament/pages/game_selection_page.dart';
-import 'package:sensor_tournament/pages/main_menu_page.dart';
 
 
 
@@ -65,8 +64,8 @@ class _GameWinnerPage extends State<GameWinnerPage>{
     game = Provider.of<Game>(context);
     Icon profilePicture = Icon(Icons.person);
 
-    if (game.players[game.highestScorePlayerIndex].picture != profilePicture){
-      profilePicture = game.players[game.highestScorePlayerIndex].picture;
+    if (game.players[game.highestValueIndex].picture != profilePicture){
+      profilePicture = game.players[game.highestValueIndex].picture;
     }
 
     return Column(
@@ -83,7 +82,7 @@ class _GameWinnerPage extends State<GameWinnerPage>{
             Icon(profilePicture.icon, size: 50),
             Flexible(
               child: Container(
-                child: Text(game.players[game.highestScorePlayerIndex].name, style: TextStyle(fontSize: 50)),
+                child: Text(game.players[game.highestValueIndex].name, style: TextStyle(fontSize: 50)),
               ),
             ),
           ],
@@ -121,7 +120,7 @@ class _GameWinnerPage extends State<GameWinnerPage>{
           icon: Icon(Icons.home, size: 50),
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return MainMenuPage();
+              return GameSelectionPage();
             }));
           },
         )

@@ -10,7 +10,7 @@ class Game extends ChangeNotifier {
 
   int _currentPlayerIndex = 0;
   int _highestScorePlayerIndex = 0;
-
+  int _highestValueIndex = 0;
   String _currentGameName = "";
   String _endHighestValue = "";
   String _valueSuffix = "";
@@ -45,7 +45,7 @@ class Game extends ChangeNotifier {
 
   String get valueSuffix => _valueSuffix;
 
-
+  int get highestValueIndex => _highestValueIndex;
 
   //Setter
   void setScore(int playerIndex, int score){
@@ -71,9 +71,10 @@ class Game extends ChangeNotifier {
 
 
 
-  void endGame(String gameName, String highestValue, [String? valueSuffix]){
+  void endGame(String gameName, String highestValue, int highestValueIndex, [String? valueSuffix]){
     _currentGameName = gameName;
     _endHighestValue = highestValue;
+    _highestValueIndex = highestValueIndex;
     if (valueSuffix != null) _valueSuffix = valueSuffix;
     _distributePoints();
   }

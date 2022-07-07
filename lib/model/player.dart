@@ -19,7 +19,6 @@ class Player extends ChangeNotifier{
       return const Icon(Icons.person);
     }
     return Icon(ImageIc)
-
      */
   }
 
