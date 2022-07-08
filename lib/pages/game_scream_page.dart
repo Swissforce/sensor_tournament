@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:better_sound_effect/better_sound_effect.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,9 @@ class _GameScreamPage extends State<GameScreamPage>{
   double _currentDecibel = 0, _maxDecibelPlayer = 0;
   int _currentPlayerIndex = 0, _currentMaxDecibelPlayerIndex = 0;
   late StreamSubscription<NoiseReading> _noiseSubscription;
+
+  final BetterSoundEffect soundEffect = BetterSoundEffect();
+  int? soundId;
 
   @override
   void initState() {
@@ -137,6 +141,13 @@ class _GameScreamPage extends State<GameScreamPage>{
   Widget buttonsWidget(BuildContext context){
     game = Provider.of<Game>(context);
 
+    if (soundId == null){
+      Future.microtask(() async {
+        soundId = await soundEffect.loadAssetAudioFile("assets/sound/winnerSound.wav");
+      });
+    }
+
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -150,6 +161,10 @@ class _GameScreamPage extends State<GameScreamPage>{
             if(!nextPlayer){
               game.endGame(_gameName, _maxDecibelPlayer.toString(), _currentMaxDecibelPlayerIndex, "dB");
               stopReadingDecibel();
+
+              if (soundId != null) {
+                soundEffect.play(soundId!);
+              }
 
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return GameWinnerPage();
